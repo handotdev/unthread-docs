@@ -1,0 +1,251 @@
+---
+title: "Using the API (Beta)"
+---
+
+Unthread provides a RESTful API for accessing your conversations and analytics.
+The API is currently in Beta and is not fully stable. Additional endpoints will
+be exposed on an ongoing basis. If you require functionality that is not
+currently exposed, please reach out to your account manager to create a feature
+request.
+
+## Create a service account
+
+In order to call the API you will first need to create a service account. Go to
+your Unthread dashboard and find the Service Accounts tab under Settings. Click
+“Add service account”, give your service account a name, and click “Submit”.
+
+![](/images/using-api.png)
+
+After creating the new service account, you will see a window displaying the
+service account’s API key. Copy this key and put it somewhere safe and secret.
+Once you close the window you will not be able to view the key again.
+
+## Calling the API
+
+The URL for calls to the API will have the following form, with ${endpoint}
+being replaced by the endpoint you are trying to call:
+
+```jsx
+https://api.unthread.io/api/${endpoint}
+```
+
+In order to authenticate, you must send an HTTP header with the key “X-Api-Key”
+and the value set to the service account key created in the previous section.
+All request and response bodies will be in JSON.
+
+## Exposed endpoints
+
+### List Conversations
+
+```jsx
+POST / conversations / list;
+```
+
+This endpoint will return a list of conversations. Requests are made in the
+following format:
+
+```tsx
+interface Where {
+  field: string;
+  operator: "==" | "!=" | ">" | "<";
+  value: string | number;
+}
+
+interface ConversationListRequest {
+  cursor?: string;
+  order?: Array<"status" | "updatedAt" | "createdAt">;
+  limit?: number;
+  descending?: boolean;
+  where?: Array<Where>;
+}
+```
+
+Accepted values for the where field are `customerId`, `status`, `createdAt` and
+`updatedAt`. Responses are made in the following format:
+
+```tsx
+interface Message {
+  ts: string;
+  userId: string;
+  userTeamId: string;
+  botId: string;
+  botName: string;
+  fullContent: string;
+  subtype: string | null;
+}
+
+interface Conversation {
+  id: string;
+  status: "open" | "in_progress" | "on_hold" | "closed";
+  customerId: string | null;
+  channelId: string;
+  wasManuallyCreated: boolean;
+  friendlyId: number;
+  createdAt: string;
+  updatedAt: string;
+  closedAt: string | null;
+  responseTime: number | null;
+  responseTimeWorking: number | null;
+  resolutionTime: number | null;
+  resolutionTimeWorking: number | null;
+  initialMessage: Message;
+}
+
+interface ConversationListResponse {
+  data: Array<Conversation>;
+  totalCount: number;
+  cursors: {
+    hasNext: boolean;
+    hasPrevious: boolean;
+    next: string;
+    previous: string;
+  };
+}
+```
+
+Responses from this endpoint are paginated by providing a cursor to the next or
+previous page. The limit per page is 100 conversations.
+
+### Reporting
+
+```jsx
+POST / reporting / time - series;
+```
+
+This endpoint will return metrics about your conversations. Requests are made in
+the following format:
+
+```tsx
+type Metric =
+  | "totalCount"
+  | "responseTimeMean"
+  | "responseTimeWorkingMean"
+  | "resolutionTimeMean"
+  | "resolutionTimeWorkingMean"
+  | "conversationsResolved";
+type DateDimension = "day" | "week" | "month";
+type Dimension = "assigneeId" | "customerId" | "tagId" | "sourceType";
+
+interface ReportingTimeSeriesRequest {
+  timezone?: string;
+  startDate: string;
+  endDate: string;
+  dateDimension: DateDimension;
+  metric: Metric;
+  dimensions?: Dimension[];
+  filters?: {
+    [dim: Dimension]: string | string[];
+  };
+}
+```
+
+- The `timezone` field is optional and defaults to “UTC”.
+- `starDate` and `endDate` have the following format: “2022-12-31”. The dates
+  are inclusive.
+- `dateDimension` specifies in what time period the data should be grouped by.
+- All metrics are numbers. Response and resolution times are in seconds.
+- `dimensions` is an array of fields to group the data by in addition to date.
+- `filters` allows you to filter the data to specific dimensions. If an array is
+  passed for a given dimension then it is treated as an `OR`.
+
+Responses are returned in the following format:
+
+```tsx
+type Dimension = "assigneeId" | "customerId" | "tagId" | "sourceType";
+
+type DataSplit = {
+  [key: string]: DataPoint;
+};
+type DataPoint = number | DataSplit;
+
+interface ReportingTimeSeriesResponse {
+  data: DataSplit;
+  dates: string[];
+  lookups: {
+    [dim: Dimension]: {
+      [key: string]: string;
+    };
+  };
+}
+```
+
+- If there is no data for a particular day then that day will not be included in
+  the `data` object, however it will be included in the `dates` array.
+- If dimensions are included in the request, then the data will be nested for
+  each dimension included. Dimensions are nested in the order they are included
+  in the request. See the example below for clarification.
+- `dates` is an array of the time periods covered by the query. For grouping on
+  weeks, each value in the array is the first day of the week starting on
+  Monday. For grouping on months, each value in the array is the first day of
+  the month.
+- `lookups` contains friendly names for the keys contained in `data`. For
+  example, if grouping by `customerId`, the lookups would contain a mapping of
+  the customer ID to the customer name.
+
+An example request and response is included below:
+
+```javascript javascript
+// Request
+// POST /reporting/time-series
+{
+  "dateDimension": "week",
+	"startDate": "2022-12-01",
+	"endDate": "2022-12-31",
+	"metric": "totalCount",
+	"timezone": "America/New_York",
+	"filters": {
+		"assigneeId": [
+			"63335fa9-ffcc-4103-8905-e4440cc7c7d4",
+			"2e8dab53-a7a2-4e1f-b9d9-66018b98365d"
+		]
+	},
+	"dimensions": ["customerId", "sourceType"]
+}
+
+// Response
+{
+   "lookups":{
+      "customerId":{
+         "9YQjOSTFXeOPF8xNURFd": "Customer 1",
+         "AWEpBY0uqxfp73HaTVS4": "Customer 2",
+				 "aZHO2af1RFa92QiOq3Y4": "Customer 3"
+      },
+      "sourceTypes":[]
+   },
+   "dates":[
+      "2022-11-28",
+      "2022-12-05",
+      "2022-12-12",
+      "2022-12-19",
+      "2022-12-26"
+   ],
+   "data":{
+      "9YQjOSTFXeOPF8xNURFd":{
+         "slack":{
+            "2022-11-28":19,
+            "2022-12-12":70,
+            "2022-12-19":17
+         },
+				 "widget":{
+            "2022-11-28":6,
+            "2022-12-12":1
+         }
+      },
+      "AWEpBY0uqxfp73HaTVS4":{
+         "email":{
+            "2022-12-31":1
+         },
+				 "slack":{
+            "2022-11-28":6,
+            "2022-12-12":1
+         }
+      },
+      "aZHO2af1RFa92QiOq3Y4":{
+         "slack":{
+            "2022-11-28":6,
+            "2022-12-12":1
+         }
+      }
+   }
+}
+```

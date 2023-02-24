@@ -1,0 +1,72 @@
+{
+  "name": "Unthread",
+  "logo": {
+    "light": "/logos/light.png",
+    "dark": "/logos/dark.png"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#FF534B",
+    "light": "#FD847E",
+    "dark": "#D4342C"
+  },
+  "topbarCtaButton": {
+    "name": "Get Early Access",
+    "url": "https://unthread.io/home#start"
+  },
+  "topbarLinks": [
+    {
+      "name": "Login",
+      "url": "https://app.unthread.io/"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://unthread.io/blog/"
+    },
+    {
+      "name": "Contact Us",
+      "icon": "envelope",
+      "url": "mailto:hello@unthread.io"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": ["introduction"]
+    },
+    {
+      "group": "Setting Up Your Account",
+      "pages": [
+        "settingupaccount/connecting-to-slack",
+        "settingupaccount/adding-unthread",
+        "settingupaccount/tracking-convo"
+      ]
+    },
+    {
+      "group": "Conversations in Slack",
+      "pages": [
+        "convosslack/convo-track",
+        "convosslack/managing-inbox",
+        "convosslack/editing-convo",
+        "convosslack/assignments",
+        "convosslack/triaging-issues"
+      ]
+    },
+    {
+      "group": "Integrations",
+      "pages": [
+        "integrations/connecting-zapier",
+        "integrations/email-slack-connector",
+        "integrations/websitechat-widget",
+        "integrations/using-api"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://twitter.com/unthreadio",
+    "linkedin": "https://www.linkedin.com/company/unthreadio/"
+  }
+}

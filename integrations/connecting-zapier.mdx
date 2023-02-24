@@ -1,0 +1,60 @@
+---
+title: "Connecting to Zapier"
+---
+
+Zapier is an integrations platform that can be used to connect the tools you use
+and automate your workflows. Unthread connects to Zapier by allowing you to
+trigger your workflows in response to events such as new conversations. You can
+also run actions in Unthread in response to events from other tools. Workflows
+created in Zapier are called Zaps.
+
+## Adding the Zapier integration
+
+You will need to be an Unthread admin in order to connect to Zapier. Visit your
+Unthread dashboard and go to “Settings” then “Service Accounts”. You will see a
+module allowing you to connect to Zapier.
+
+## Join the Beta Program
+
+From the Service accounts page, be sure to click “Join the beta” to get early
+access to the Unthread for Zapier app. When you click, you’ll see something like
+this:
+
+![](/images/connecting-zapier-1.png)
+
+## Create a service account
+
+Once you have connected Zapier, you will need to create a service account within
+your Unthread dashboard. Zapier will use this service account to trigger events
+and actions. Go back to your Unthread dashboard’s Service Accounts tab, click
+“Add service account”, give your service account a name, and click “Submit”.
+
+After creating the new service account, you will see a window displaying the
+service account’s API key. Copy this key and put it somewhere safe and secret.
+Once you close the window you will not be able to view the key again. This key
+will be entered into Zapier when you are ready to create your first Zap.
+
+## Creating your first Zap
+
+Within the Zapier dashboard, click “Create Zap” to get started.
+
+![](/images/connecting-zapier-2.png)
+
+You will need to add Unthread as a trigger that will kick off your Zap. Search
+for Unthread in the integrations list and click it.
+
+![](/images/connecting-zapier-3.png)
+
+Configure the Unthread trigger by selecting “New Conversation” as the event
+type. Next, click “Sign in” which will prompt you to enter the Unthread service
+account API key you created earlier.
+
+![](/images/connecting-zapier-4.png)
+
+![](/images/connecting-zapier-5.png)
+
+After entering the service account API key, you can trigger a test request that
+will attempt to fetch a recently created conversation. You will need to have had
+a conversation created in the last 24 hours for the test request to succeed.
+Once this completes, you will be prompted to continue configuring your Zap with
+additional steps.

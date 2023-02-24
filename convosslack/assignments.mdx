@@ -1,0 +1,63 @@
+---
+title: Assignments, escalations, and SLAs
+sidebarTitle: Assignments
+---
+
+Unthread provides a series of automations to ensure that your customers are always responded to and issues are always resolved in the shortest time possible.
+
+Escalation paths and SLAs can be set on a per-customer basis, so you can set different rules depending on your relationship with that account. To manage a customer’s settings:
+
+Go to **Customers ➡️ Click on a customer name ➡️ Click “Settings” from the customer page**
+
+You'll see the ability to edit admins, manage their Slack channel, and set assignment rules.
+
+## Configuring Assignment Rules
+
+Assignment rules are the primary way to ensure an initial response to a customer. These can be set by clicking on the “Settings” tab for a particular customer.
+
+### Default Assignment Rules
+
+By heading over to “Settings” > “Slack”, you can set up the default assignment rules that will be used for all customers
+
+![](/images/assingments.png)
+
+### Per-customer Rules
+
+From a customer’s profile, navigate to the “Settings” tab, and you’ll have the ability to set custom assignment rules. This is helpful if you have specific reps or different SLAs for individual customers.
+
+## Setting an Assignee
+
+When a [new conversation](https://www.notion.so/75eac24f77f841568f483fa4c858d3cc) is tracked in a channel, you can set a default assignee who will be responsible for responding to the customer. The system will default to whoever created the account, but you can easily change this to any member of your team.
+
+You can also set the default to “Unassigned”, which will leave the conversation open and available for anyone to respond to. When someone responds to an unassigned message, they will be marked as the assignee.
+
+## Setting up escalation paths and other custom rules
+
+Click the blue “+” button to add more steps beyond the initial assignment. These subsequent rules will be triggered if there’s no response to the customer within a given time frame.
+
+You can set up as many steps as you’d like. We support the following automations if there is no response to the customer within the specified time frame:
+
+### Escalate conversation
+
+This will increment the “Escalation” level, and reassign the conversation to someone else on your team. The new assignee will get a DM of the escalation, and the message will appear in [their inbox](/convosslack/managinginbox).
+
+We’ll provide reports on how often messages are being escalated to help you identify shortcomings in your process.
+
+### Reassign conversation
+
+This is similar to “Escalate”, in that the message will be reassigned and someone else will be notified and responsible for that message, but in this case, the “escalation” level will not be increased.
+
+### Send Slack reminder to assignee
+
+This will send an automated message from Unthread to the current assignee of the message reminding them of the open ticket. This can be a helpful ping for forgetful folks!
+
+### Post conversation to triage channel
+
+This will automatically [triage the message](/convosslack/triagingissues) to an internal channel for further discussion. You’ll define the triage channel globally on your main settings page.
+
+<Note>
+📖 Learn more about:
+
+[Triaging issues with your team](/convosslack/triagingissues)
+
+</Note>

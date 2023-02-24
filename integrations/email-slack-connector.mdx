@@ -1,0 +1,120 @@
+---
+title: "Email to Slack Connector"
+---
+
+Unthread allows you to relay support emails to your Slack channel, and you can
+respond to customers directly from Slack. This means you never need to open
+Outlook or Gmail again 🙌
+
+Head over to “Settings” > “Email” from your Unthread dashboard, and then keep
+reading!
+
+<iframe
+  className="w-full aspect-video"
+  src="https://www.loom.com/embed/edfe02451bbc425091e370421ba4debc"
+></iframe>
+
+## 🛠 Setting up the connector
+
+The first step is to forward messages from an email address into Slack. That
+way, your entire team has context, and you can use assignment rules to notify
+the right responder.
+
+## Set up email forwarding
+
+First, choose a name for the support email group, something like “{Company}
+Support” will do just fine!
+
+Then, add the email address that you use to receive support emails. You should
+have already set this up via your email provider.
+
+Lastly, set up email forwarding to the Unthread email that’s in the dashboard.
+This is the trickiest step!
+
+Follow these steps to enable forwarding, depending on which email provider you
+use:
+
+- [Gmail / Google Workspace](https://support.google.com/a/answer/4524505#address-map-forwarding)
+  - Please follow the instructions under “Forward messages with address maps”.
+    The instructions under “Forward messages with Gmail automatic forwarding”
+    are not currently supported.
+- [Outlook / Microsoft 365](https://support.office.com/en-ie/article/forward-email-from-office-365-to-another-email-account-1ed4ee1e-74f8-4f53-a174-86b748ff6a0e)
+
+<Note>
+📖 Some common mistakes to double-check:
+• Be sure to follow the steps in those guides rather than use a Google Group. It’ll be more reliable this way and is worth the effort!
+• Be sure that your support email “support@{yourdomain}.com” matches exactly what you enter into the Unthread dashboard
+• Double-check that you’ve entered the unthread email (should look something like “{domain}-unthread-u9hd0@mail.unthread.io” is entered in your email forwarding setup
+
+</Note>
+
+## Choose a Slack channel
+
+Select a channel from the dropdown, and the email contents will be posted there.
+For your channel to appear, it must be an internal channel (not a Slack Connect
+or shared channel).
+
+## Set up assignment rules
+
+Inbound emails can have their own assignment rules that you configure on this
+page. This is important because the email may not match an existing customer, so
+you’ll need to determine how to assign those messages.
+
+## 📨 Managing emails in Slack
+
+Once setup, you’ll start seeing email content posted directly to your Slack
+channel. How great is that!
+
+## Tracking & assigning new messages
+
+You’ve already set up the assignment rules in the first step, new emails are
+[tracked just like any other message](/convosslack/convotrack).
+This means you can set up
+[escalation paths](/convosslack/assingments)
+& SLAs,
+[triage messages](/convosslack/triagingissues)
+with your team, and more. When a message is assigned to you, it will be in your
+[Inbox](/convosslack/managinginbox).
+
+New messages will use the 📩 icon to indicate that the message is from an
+inbound email.
+
+![](/images/slackconnector-1.png)
+
+## Discussing internally
+
+Unthread will create a thread for the inbound email where you can discuss things
+internally. By default, all comments in this thread are private and not shared
+with the customer. You’ll see a message like the one below posted with any new
+email.
+
+![](/images/slackconnector-2.png)
+
+## Sending replies to customers
+
+This is the good stuff and allows you to talk with customers without ever
+leaving Slack. Compose your message in the thread that Unthread has created for
+you, and when you’re ready to send, include “/unthread send” at the bottom of
+the message.
+
+![](/images/slack-connector-3.png)
+
+When you include this, the message will be sent to the customer in the same
+email thread, and anyone cc’ed on the message will automatically be included.
+
+Here’s how that very reply will look to the customer in the email that they
+receive:
+
+![](/images/slack-connector-4.png)
+
+Pretty nifty, eh?
+
+## Analytics
+
+You’ll get the same great analytics on response rates and resolution times that
+you get with other messages.
+
+In your analytics page, you’ll see email responses broken out based on the name
+that you give your support team in the first step. This allows you get reports
+on email response rates regardless of whether the person you’re speaking with is
+a known customer or not.
